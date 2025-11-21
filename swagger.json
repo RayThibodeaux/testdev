@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SQL Honeypot API",
+    "version": "1.0.0",
+    "description": "Test API that simulates a JSON login endpoint with SQL-like behavior for scanners. No real database is used."
+  },
+  "paths": {
+    "/api/login": {
+      "post": {
+        "summary": "Login honeypot endpoint",
+        "description": "Accepts username/password JSON and, when payload looks like SQL injection, returns a simulated SQL query string.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Honeypot response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "message": { "type": "string" },
+                    "simulated_query": { "type": "string" },
+                    "note": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
